@@ -1,0 +1,8 @@
+Document: vrui
+Title: Vrui documentation
+Abstract: Documentation for Vrui shared library.
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/Vrui-3.1/index.html
+Files: /usr/share/doc/Vrui-3.1/*.html

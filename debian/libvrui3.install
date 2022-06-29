@@ -1,0 +1,4 @@
+usr/lib/*/Vrui*/lib*.so.*
+usr/share/Vrui*/GLFonts/
+usr/share/Vrui*/Shaders/
+usr/share/Vrui*/Textures/

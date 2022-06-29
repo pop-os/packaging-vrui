@@ -1,0 +1,51 @@
+Source: vrui
+Section: libs
+Priority: optional
+Maintainer: Jason Gerard DeRose <jason@system76.com>
+Build-Depends: debhelper (>= 9),
+    libudev-dev,
+    libusb-1.0-0-dev,
+    zlib1g-dev,
+    libpng-dev,
+    libjpeg-dev,
+    libtiff-dev,
+    libasound2-dev,
+    libspeex-dev,
+    libopenal-dev,
+    libv4l-dev,
+    libdc1394-dev,
+    libtheora-dev,
+    libbluetooth-dev,
+    mesa-common-dev,
+    libgl1-mesa-dev,
+    libglu1-mesa-dev,
+Standards-Version: 3.9.7
+Homepage: http://idav.ucdavis.edu/~okreylos/ResDev/Vrui/
+
+Package: libvrui3
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends},
+Description: Virtual Reality UI Toolkit - shared library
+ FIXME.
+
+Package: libvrui3-dev
+Section: libdevel
+Architecture: amd64
+Provides: libvrui-dev
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvrui3 (= ${binary:Version}),
+Description: Virtual Reality UI Toolkit - shared library development files
+ Virtual Reality UI Toolkit - shared library development files
+
+Package: vrui
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, libvrui3 (= ${binary:Version})
+Description: Virtual Reality UI Toolkit
+ Virtual Reality UI Toolkit
+
+Package: vrui-doc
+Section: doc
+Architecture: all
+Depends: ${misc:Depends}
+Description: Virtual Reality UI Toolkit - documentation
+ Virtual Reality UI Toolkit - documentation
+

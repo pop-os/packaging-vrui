@@ -1,0 +1,19 @@
+#!/bin/sh -e
+
+# To minimize chance of conflict with existing groups, we use "vrui-grp" for the
+# system group:
+VRUI_GROUP="vrui-grp"
+VRUI_ETC="/etc/Vrui-8.0/"
+
+case $1 in
+    configure)
+        if ! getent group $VRUI_GROUP > /dev/null; then
+            addgroup --system $VRUI_GROUP
+        fi
+        chgrp -R $VRUI_GROUP $VRUI_ETC
+        chmod -R g+wX $VRUI_ETC
+        ;;
+esac
+
+#DEBHELPER#
+

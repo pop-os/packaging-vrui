@@ -1,0 +1,5 @@
+usr/lib/*/Vrui*/lib*.so
+usr/lib/*/pkgconfig/
+usr/include/*
+usr/share/Vrui*/make/
+usr/share/Vrui*/Vrui.makeinclude

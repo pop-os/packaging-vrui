@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+DPKG_EXPORT_BUILDFLAGS = 1
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	make clean || true
+
+override_dh_auto_configure:
+	# FIXME: get build working without use of RPATH:
+	# sed -i "s/USE_RPATH = 1/USE_RPATH = 0/" makefile
+
+override_dh_auto_build:
+	make INSTALLDIR="" SYSTEMINSTALL=1 -j$(shell nproc)
+
+override_dh_auto_install:
+	make INSTALLDIR=debian/tmp SYSTEMINSTALL=1 install
