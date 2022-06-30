@@ -19,6 +19,8 @@ Build-Depends: debhelper (>= 9),
     mesa-common-dev,
     libgl1-mesa-dev,
     libglu1-mesa-dev,
+    libfreetype-dev,
+    libssl-dev,
 Standards-Version: 3.9.7
 Homepage: http://idav.ucdavis.edu/~okreylos/ResDev/Vrui/
 
