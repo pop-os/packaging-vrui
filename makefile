@@ -3,17 +3,17 @@
 # Copyright (c) 1998-2021 Oliver Kreylos
 #
 # This file is part of the WhyTools Build Environment.
-# 
+#
 # The WhyTools Build Environment is free software; you can redistribute
 # it and/or modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2 of the
 # License, or (at your option) any later version.
-# 
+#
 # The WhyTools Build Environment is distributed in the hope that it will
 # be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
 # of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with the WhyTools Build Environment; if not, write to the Free
 # Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
@@ -91,13 +91,7 @@ include $(VRUI_MAKEDIR)/Packages.System
 
 # Location of GNU versions of Helvetica/Times New Roman/New Courier
 # TrueType fonts:
-SCENEGRAPH_USE_FANCYTEXT = 0
-ifneq ($(SYSTEM_HAVE_FREETYPE),0)
-  SYSTEM_COREFONTDIR = $(sort $(dir $(shell find /usr/share/fonts -name FreeSans.ttf -or -name FreeSerif.ttf -or -name FreeMono.ttf)))
-  ifeq ($(words $(SYSTEM_COREFONTDIR)),1)
-    SCENEGRAPH_USE_FANCYTEXT = 1
-  endif
-endif
+SCENEGRAPH_USE_FANCYTEXT = 1
 
 ########################################################################
 # Select support for HTC Vive via the OpenVR API
@@ -114,40 +108,40 @@ endif
 # If the above fails, enter the correct path here, or pass
 # STEAMVRDIR=... on make's command line during both "make" and "make
 # install":
-# STEAMVRDIR = 
+# STEAMVRDIR =
 
 ifneq ($(strip $(STEAMVRDIR)),)
   # Build OpenVRHost VRDeviceDaemon driver module:
   SYSTEM_HAVE_OPENVR = 1
-  
+
   # Root directory of the OpenVR SDK
   # (The single required header file, openvr_driver.h, is now included in
   # Vrui package as contributed source.)
   OPENVR_BASEDIR = $(PWD)/Contributed/OpenVR
-  
+
   # Try looking for the Steam run-time three levels up from the SteamVR
   # directory first:
   STEAMDIR = $(realpath $(STEAMVRDIR)/../../..)
   STEAMRUNTIMEDIR1 = $(firstword $(wildcard $(STEAMDIR)/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu))
-  
+
   # If the run-time wasn't found there, look four levels up from the
   # SteamVR directory:
   ifeq ($(strip $(STEAMRUNTIMEDIR1)),)
     STEAMDIR = $(realpath $(STEAMVRDIR)/../../../..)
     STEAMRUNTIMEDIR1 = $(firstword $(wildcard $(STEAMDIR)/ubuntu12_32/steam-runtime/amd64/lib/x86_64-linux-gnu))
   endif
-  
+
   # If the run-time still wasn't found, disable Vive support:
   ifeq ($(strip $(STEAMRUNTIMEDIR1)),)
     SYSTEM_HAVE_OPENVR = 0
   endif
-  
+
   # Set the secondary Steam run-time directory:
   STEAMRUNTIMEDIR2 = $(realpath $(STEAMRUNTIMEDIR1)/../../usr/lib/x86_64-linux-gnu)
-  
+
   # SteamVR Lighthouse driver directory:
   STEAMVRDRIVERDIR = $(STEAMVRDIR)/drivers/lighthouse/bin/linux64
-  
+
   # SteamVR render model resource directory:
   STEAMVRRENDERMODELSDIR = $(STEAMVRDIR)/resources/rendermodels
 else
@@ -252,7 +246,7 @@ ifdef SYSTEMINSTALL
   INSTALLROOT = /usr
 else
   ifeq ($(findstring $(VRUI_NAME),$(INSTALLDIR)),$(VRUI_NAME))
-    INSTALLSHIM = 
+    INSTALLSHIM =
   else
     INSTALLSHIM = /$(VRUI_NAME)
   endif
@@ -309,15 +303,15 @@ endif
 # (Supported packages can be found in ./BuildRoot/Packages)
 ########################################################################
 
-PACKAGES = 
+PACKAGES =
 
 ########################################################################
 # Specify all final targets
 ########################################################################
 
-LIBRARIES = 
-PLUGINS = 
-EXECUTABLES = 
+LIBRARIES =
+PLUGINS =
+EXECUTABLES =
 
 #
 # The basic libraries:
@@ -1258,7 +1252,7 @@ endif
 SOUND_HEADERS = $(wildcard Sound/*.h) \
                 $(wildcard Sound/*.icpp)
 ifeq ($(SYSTEM),LINUX)
-  SOUND_LINUX_HEADERS = 
+  SOUND_LINUX_HEADERS =
   ifneq ($(SYSTEM_HAVE_ALSA),0)
     SOUND_LINUX_HEADERS += Sound/Linux/ALSAPCMDevice.h \
                            Sound/Linux/ALSAAudioCaptureDevice.h
@@ -1764,7 +1758,7 @@ ifneq ($(SYSTEM_HAVE_OPENVR),0)
 	@$(call CONFIG_SETSTRINGVAR,VRDeviceDaemon/VRDevices/OpenVRHost-Config.h.temp,VRDEVICEDAEMON_CONFIG_OPENVRHOST_STEAMVRDIR,$(subst $(STEAMDIR)/,,$(realpath $(STEAMVRDIR))))
 	@if ! diff VRDeviceDaemon/VRDevices/OpenVRHost-Config.h.temp VRDeviceDaemon/VRDevices/OpenVRHost-Config.h > /dev/null ; then cp VRDeviceDaemon/VRDevices/OpenVRHost-Config.h.temp VRDeviceDaemon/VRDevices/OpenVRHost-Config.h ; fi
 	@rm VRDeviceDaemon/VRDevices/OpenVRHost-Config.h.temp
-endif	
+endif
 	@touch $(DEPDIR)/Configure-VRDeviceDaemon
 
 VRDEVICEDAEMONLIB_SOURCES = VRDeviceDaemon/VRDevice.cpp \
@@ -1806,7 +1800,7 @@ $(EXEDIR)/VRDeviceDaemon: LINKFLAGS += $(PLUGINHOSTLINKFLAGS)
 ifneq ($(SYSTEM_HAVE_OPENVR),0)
   # Add system library directory first to get current versions, not the outdated cruft in SteamVR:
   $(EXEDIR)/VRDeviceDaemon: LINKFLAGS += -Wl,-rpath,/usr/$(LIBEXT)
-  
+
   # Add SteamVR library directories:
   $(EXEDIR)/VRDeviceDaemon: LINKFLAGS += -Wl,-rpath,$(STEAMRUNTIMEDIR1)
   ifneq ($(strip $(STEAMRUNTIMEDIR2)),)
@@ -2227,7 +2221,7 @@ ifneq ($(SYSTEM_HAVE_RPATH),0)
   endif
 else
 	@echo 'Libs: -L$${libdir} $(strip $(patsubst lib%,-l%$(LDEXT),$(LIBRARY_NAMES))) $(ROGUE_LIBDIRS) $(ROGUE_LIBS)' >> $(PKGCONFIGFILE)
-endif	
+endif
 	@echo 'Cflags: -I$${includedir} $(ROGUE_INCLUDEDIRS) $(strip $(VRUIAPP_CFLAGS))' >> $(PKGCONFIGFILE)
 
 # Pseudo-target to configure the template makefile
